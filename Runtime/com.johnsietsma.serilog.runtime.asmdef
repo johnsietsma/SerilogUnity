@@ -1,5 +1,5 @@
 {
-    "name": "SerilogUnityConsoleSink",
+    "name": "com.johnsietsma.serilog.runtime",
     "references": [],
     "optionalUnityReferences": [],
     "includePlatforms": [],
@@ -8,5 +8,6 @@
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": []
+    "defineConstraints": [],
+    "versionDefines": []
 }

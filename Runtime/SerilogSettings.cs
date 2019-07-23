@@ -3,7 +3,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace PointClouds
+namespace Serilog
 {
 
     // Create a new type of Settings Asset.

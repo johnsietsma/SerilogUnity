@@ -6,7 +6,7 @@ using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine.UIElements;
 
-namespace PointClouds
+namespace Serilog.Editor
 {
     static class SerilogSettingsUIElementsRegister
     {

@@ -1,7 +1,7 @@
 ﻿using Serilog;
 using Serilog.Core;
 
-namespace PointClouds
+namespace Serilog
 {
     public static class SerilogSetup
     {
