@@ -12,6 +12,6 @@ xsi:schemaLocation="
                         UnityEditor.PackageManager.UI ../../../UIElementsSchema/UnityEditor.PackageManager.UI.xsd
 "
 >
-  <engine:Label text="Infinite Points"/>
+  <engine:Label text="Serilog"/>
   <engine:Label text="Log Level" class="form-editor"/>
 </engine:UXML>

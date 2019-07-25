@@ -1,9 +1,9 @@
-﻿// Register a SettingsProvider using UIElements for the drawing framework:
 using Serilog.Events;
 using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.UIElements;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Serilog.Editor
@@ -28,7 +28,7 @@ namespace Serilog.Editor
                     logLevelField.RegisterCallback<ChangeEvent<Enum>>(SerilogSettings_OnValueChanged);
                     rootElement.Add(logLevelField);
 
-                    //var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/InfinitePoints/Editor/InfinitePoints.uss");
+                    //var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Serilog/Editor/Serilog.uss");
                     //rootElement.styleSheets.Add(styleSheet);
                 },
 

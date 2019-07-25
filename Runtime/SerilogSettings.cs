@@ -1,4 +1,4 @@
-﻿using Serilog.Events;
+using Serilog.Events;
 using System.IO;
 using UnityEditor;
 using UnityEngine;

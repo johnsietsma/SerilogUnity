@@ -9,10 +9,10 @@ namespace Serilog
 
         static SerilogSetup()
         {
-            DefaultSetup();   
+            CreateLogger();   
         }
 
-        public static void DefaultSetup()
+        public static void CreateLogger()
         {
             var settings = SerilogSettings.GetOrCreateSettings();
             LevelSwitch = new LoggingLevelSwitch(settings.LogLevel);
