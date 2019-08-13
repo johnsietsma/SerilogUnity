@@ -7,23 +7,24 @@ namespace Serilog
 
     public class SerilogSettings : ScriptableObject
     {
-        public LogEventLevel LogLevel { get => m_LogLevel; set => m_LogLevel = value; }
+        public static SerilogSettings Instance;
+
+        public LogEventLevel LogLevel { get => m_LogLevel; set { m_LogLevel = value; m_LevelSwitch.MinimumLevel = value; } }
 
         [SerializeField]
         private LogEventLevel m_LogLevel = LogEventLevel.Debug;
-
-        public static SerilogSettings Instance;
-        public static LoggingLevelSwitch LevelSwitch = new LoggingLevelSwitch(LogEventLevel.Debug);
+        
+        LoggingLevelSwitch m_LevelSwitch = new LoggingLevelSwitch(LogEventLevel.Debug);
 
         public void OnEnable()
         {
             Debug.Log("Enable Serilog");
 
-            LevelSwitch = new LoggingLevelSwitch(LogLevel);
+            m_LevelSwitch = new LoggingLevelSwitch(LogLevel);
 
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.UnityConsole()
-                .MinimumLevel.ControlledBy(LevelSwitch)
+                .MinimumLevel.ControlledBy(m_LevelSwitch)
                 .CreateLogger();
 
             Instance = this;

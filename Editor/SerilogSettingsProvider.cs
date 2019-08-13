@@ -44,7 +44,7 @@ namespace Serilog.Editor
 
         private static SerilogSettings GetOrCreateSettings()
         {
-            var settings = GetSettings();
+            settings = GetSettings();
             if (settings == null)
             {
                 settings = SerilogSettings.CreateInstance<SerilogSettings>();
@@ -63,9 +63,7 @@ namespace Serilog.Editor
 
         private static void SerilogSettings_OnValueChanged( ChangeEvent<Enum> evt )
         {
-            var logLevel = (LogEventLevel)evt.newValue;
-            SerilogSettings.LevelSwitch.MinimumLevel = logLevel;
-            settings.LogLevel = logLevel;
+            settings.LogLevel = (LogEventLevel)evt.newValue;
         }
     }
 
