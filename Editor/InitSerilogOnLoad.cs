@@ -2,12 +2,14 @@
 using UnityEditor;
 using UnityEngine;
 
-[InitializeOnLoad]
-public class InitSerilogOnLoad : MonoBehaviour
+namespace Serilog.Editor
 {
-    static InitSerilogOnLoad()
+    [InitializeOnLoad]
+    public class InitSerilogOnLoad : MonoBehaviour
     {
-        Debug.Log("Loading Serilog");
-        SerilogSetup.CreateLogger();
+        static InitSerilogOnLoad()
+        {
+            SerilogSettingsProvider.GetSettings();
+        }
     }
 }
