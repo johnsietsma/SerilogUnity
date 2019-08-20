@@ -42,7 +42,7 @@ namespace Serilog.Editor
             return AssetDatabase.LoadAssetAtPath<SerilogSettings>(SETTINGS_FILE);
         }
 
-        private static SerilogSettings GetOrCreateSettings()
+        public static SerilogSettings GetOrCreateSettings()
         {
             settings = GetSettings();
             if (settings == null)

@@ -4,12 +4,13 @@ using UnityEngine;
 
 namespace Serilog.Editor
 {
+    // Handle editor case
     [InitializeOnLoad]
     public class InitSerilogOnLoad : MonoBehaviour
     {
         static InitSerilogOnLoad()
         {
-            SerilogSettingsProvider.GetSettings();
+            SerilogSettingsProvider.GetOrCreateSettings();
         }
     }
 }
