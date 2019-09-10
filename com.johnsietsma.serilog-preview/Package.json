@@ -1,6 +1,6 @@
 {
     "name": "com.johnsietsma.serilog",
-    "version": "0.0.1",
+    "version": "0.0.1-preview",
     "displayName": "Serilog",
     "description": "Provide Serilog as a Unity package",
     "unity": "2019.1",
@@ -11,7 +11,7 @@
         "logging"
     ],
     "author": {
-        "name": "Jojhn Sietsma",
+        "name": "John Sietsma",
         "email": "john@sietsma.com",
         "url": "https://serilog.net/"
     }
