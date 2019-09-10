@@ -1,9 +1,8 @@
 {
     "name": "com.johnsietsma.serilog.editor",
     "references": [
-        "GUID:a81e16ea51b989d46b9b89ba0a3d0c91"
+        "GUID:09ef32ec8d2e77e43b3551c56c0f1fad"
     ],
-    "optionalUnityReferences": [],
     "includePlatforms": [
         "Editor"
     ],
