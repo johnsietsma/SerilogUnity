@@ -18,8 +18,6 @@ namespace Serilog
 
         public void OnEnable()
         {
-            Debug.Log("Enable Serilog");
-
             m_LevelSwitch = new LoggingLevelSwitch(LogLevel);
 
             Log.Logger = new LoggerConfiguration()
