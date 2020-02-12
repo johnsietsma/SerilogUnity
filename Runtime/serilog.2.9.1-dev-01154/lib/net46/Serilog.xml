@@ -141,9 +141,9 @@
         </member>
         <member name="M:Serilog.Configuration.LoggerDestructuringConfiguration.ToMaximumDepth(System.Int32)">
             <summary>
-            When destructuring objects, depth will be limited to 5 property traversals deep to
+            When destructuring objects, depth will be limited to 10 property traversals deep to
             guard against ballooning space when recursive/cyclic structures are accidentally passed. To
-            increase this limit pass a higher value.
+            change this limit pass a new maximum depth.
             </summary>
             <param name="maximumDestructuringDepth">The maximum depth to use.</param>
             <returns>Configuration object allowing method chaining.</returns>
@@ -152,7 +152,7 @@
         <member name="M:Serilog.Configuration.LoggerDestructuringConfiguration.ToMaximumStringLength(System.Int32)">
             <summary>
             When destructuring objects, string values can be restricted to specified length
-            thus avoiding bloating payload. Limit is applied to each value separately, 
+            thus avoiding bloating payload. Limit is applied to each value separately,
             sum of length of strings can exceed limit.
             </summary>
             <param name="maximumStringLength">The maximum string length.</param>
@@ -162,7 +162,7 @@
         <member name="M:Serilog.Configuration.LoggerDestructuringConfiguration.ToMaximumCollectionCount(System.Int32)">
             <summary>
             When destructuring objects, collections be restricted to specified count
-            thus avoiding bloating payload. Limit is applied to each collection separately, 
+            thus avoiding bloating payload. Limit is applied to each collection separately,
             sum of length of collection can exceed limit.
             Applies limit to all <see cref="T:System.Collections.IEnumerable"/> including dictionaries.
             </summary>
@@ -207,6 +207,46 @@
             </summary>
             <returns>Configuration object allowing method chaining.</returns>
             <exception cref="T:System.ArgumentNullException"></exception>
+            <returns>Configuration object allowing method chaining.</returns>
+        </member>
+        <member name="M:Serilog.Configuration.LoggerEnrichmentConfiguration.When(System.Func{Serilog.Events.LogEvent,System.Boolean},System.Action{Serilog.Configuration.LoggerEnrichmentConfiguration})">
+            <summary>
+            Apply an enricher only when <paramref name="condition"/> evaluates to <c>true</c>.
+            </summary>
+            <param name="condition">A predicate that evaluates to <c>true</c> when the supplied <see cref="T:Serilog.Events.LogEvent"/>
+            should be enriched.</param>
+            <param name="configureEnricher">An action that configures the wrapped enricher.</param>
+            <returns>Configuration object allowing method chaining.</returns>
+        </member>
+        <member name="M:Serilog.Configuration.LoggerEnrichmentConfiguration.AtLevel(Serilog.Events.LogEventLevel,System.Action{Serilog.Configuration.LoggerEnrichmentConfiguration})">
+            <summary>
+            Apply an enricher only to events with a <see cref="T:Serilog.Events.LogEventLevel"/> greater than or equal to <paramref name="enrichFromLevel"/>.
+            </summary>
+            <param name="enrichFromLevel">The level from which the enricher will be applied.</param>
+            <param name="configureEnricher">An action that configures the wrapped enricher.</param>
+            <returns>Configuration object allowing method chaining.</returns>
+            <remarks>This method permits additional information to be attached to e.g. warnings and errors, that might be too expensive
+            to collect or store at lower levels.</remarks>
+        </member>
+        <member name="M:Serilog.Configuration.LoggerEnrichmentConfiguration.AtLevel(Serilog.Core.LoggingLevelSwitch,System.Action{Serilog.Configuration.LoggerEnrichmentConfiguration})">
+            <summary>
+            Apply an enricher only to events with a <see cref="T:Serilog.Events.LogEventLevel"/> greater than or equal to the level specified by <paramref name="levelSwitch"/>.
+            </summary>
+            <param name="levelSwitch">A <see cref="T:Serilog.Core.LoggingLevelSwitch"/> that specifies the level from which the enricher will be applied.</param>
+            <param name="configureEnricher">An action that configures the wrapped enricher.</param>
+            <returns>Configuration object allowing method chaining.</returns>
+            <remarks>This method permits additional information to be attached to e.g. warnings and errors, that might be too expensive
+            to collect or store at lower levels.</remarks>
+        </member>
+        <member name="M:Serilog.Configuration.LoggerEnrichmentConfiguration.Wrap(Serilog.Configuration.LoggerEnrichmentConfiguration,System.Func{Serilog.Core.ILogEventEnricher,Serilog.Core.ILogEventEnricher},System.Action{Serilog.Configuration.LoggerEnrichmentConfiguration})">
+            <summary>
+            Helper method for wrapping sinks.
+            </summary>
+            <param name="loggerEnrichmentConfiguration">The parent enrichment configuration.</param>
+            <param name="wrapEnricher">A function that allows for wrapping <see cref="T:Serilog.Core.ILogEventEnricher"/>s
+            added in <paramref name="configureWrappedEnricher"/>.</param>
+            <param name="configureWrappedEnricher">An action that configures enrichers to be wrapped in <paramref name="wrapEnricher"/>.</param>
+            <returns>Configuration object allowing method chaining.</returns>
         </member>
         <member name="T:Serilog.Configuration.LoggerFilterConfiguration">
             <summary>
@@ -260,7 +300,7 @@
             Sets the minimum level to be dynamically controlled by the provided switch.
             </summary>
             <param name="levelSwitch">The switch.</param>
-            <returns>Configuration object allowing method chaining.</returns>        
+            <returns>Configuration object allowing method chaining.</returns>
         </member>
         <member name="M:Serilog.Configuration.LoggerMinimumLevelConfiguration.Verbose">
             <summary>
@@ -404,6 +444,15 @@
             events passed through the sink.</param>
             <returns>Configuration object allowing method chaining.</returns>
         </member>
+        <member name="M:Serilog.Configuration.LoggerSinkConfiguration.Conditional(System.Func{Serilog.Events.LogEvent,System.Boolean},System.Action{Serilog.Configuration.LoggerSinkConfiguration})">
+            <summary>
+            Write to a sink only when <paramref name="condition"/> evaluates to <c>true</c>.
+            </summary>
+            <param name="condition">A predicate that evaluates to <c>true</c> when the supplied <see cref="T:Serilog.Events.LogEvent"/>
+            should be written to the configured sink.</param>
+            <param name="configureSink">An action that configures the wrapped sink.</param>
+            <returns>Configuration object allowing method chaining.</returns>
+        </member>
         <member name="M:Serilog.Configuration.LoggerSinkConfiguration.Wrap(Serilog.Configuration.LoggerSinkConfiguration,System.Func{Serilog.Core.ILogEventSink,Serilog.Core.ILogEventSink},System.Action{Serilog.Configuration.LoggerSinkConfiguration})">
             <summary>
             Helper method for wrapping sinks.
@@ -514,7 +563,7 @@
         </member>
         <member name="M:Serilog.Context.LogContext.Reset">
             <summary>
-            Remove all enrichers from <see cref="T:Serilog.Context.LogContext"/> for the current async scope. 
+            Remove all enrichers from <see cref="T:Serilog.Context.LogContext"/> for the current async scope.
             </summary>
         </member>
         <member name="T:Serilog.Core.Constants">
@@ -531,7 +580,7 @@
         </member>
         <member name="T:Serilog.Core.Enrichers.PropertyEnricher">
             <summary>
-            Adds a new property encricher to the log event.
+            Adds a new property enricher to the log event.
             </summary>
         </member>
         <member name="M:Serilog.Core.Enrichers.PropertyEnricher.#ctor(System.String,System.Object,System.Boolean)">
@@ -744,7 +793,7 @@
         </member>
         <member name="M:Serilog.Core.Logger.IsEnabled(Serilog.Events.LogEventLevel)">
             <summary>
-            Determine if events at the specified level will be passed through
+            Determine if events at the specified level, and higher, will be passed through
             to the log sinks.
             </summary>
             <param name="level">Level to check.</param>
@@ -1759,6 +1808,56 @@
             <param name="formatProvider">A format provider to apply to the value, or null to use the default.</param>
             <seealso cref="M:Serilog.Events.LogEventPropertyValue.ToString(System.String,System.IFormatProvider)"/>.
         </member>
+        <member name="T:Serilog.Events.EventProperty">
+            <summary>
+            A property associated with a <see cref="T:Serilog.Events.LogEvent"/>.
+            </summary>
+            <remarks>This type is currently internal, while we consider future directions for the logging pipeline, but should end up public
+            in future.</remarks>
+        </member>
+        <member name="F:Serilog.Events.EventProperty.None">
+            <summary>
+            No property.
+            </summary>
+        </member>
+        <member name="P:Serilog.Events.EventProperty.Name">
+            <summary>
+            The name of the property.
+            </summary>
+        </member>
+        <member name="P:Serilog.Events.EventProperty.Value">
+            <summary>
+            The value of the property.
+            </summary>
+        </member>
+        <member name="M:Serilog.Events.EventProperty.#ctor(System.String,Serilog.Events.LogEventPropertyValue)">
+            <summary>
+            Construct a <see cref="T:Serilog.Events.LogEventProperty"/> with the specified name and value.
+            </summary>
+            <param name="name">The name of the property.</param>
+            <param name="value">The value of the property.</param>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Serilog.Events.EventProperty.Deconstruct(System.String@,Serilog.Events.LogEventPropertyValue@)">
+            <summary>
+            Permit deconstruction of the property into a name/value pair.
+            </summary>
+            <param name="name">The name of the property.</param>
+            <param name="value">The value of the property.</param>
+        </member>
+        <member name="M:Serilog.Events.EventProperty.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Serilog.Events.EventProperty.Equals(Serilog.Events.EventProperty)">
+            <summary>Indicates whether this instance and a specified <see cref="T:Serilog.Events.EventProperty"/> are equal.</summary>
+            <param name="other">The <see cref="T:Serilog.Events.EventProperty"/> to compare with the current instance. </param>
+            <returns>
+            <see langword="true" /> if <paramref name="other" /> and this instance represent the same value; otherwise, <see langword="false" />. </returns>
+        </member>
+        <member name="M:Serilog.Events.EventProperty.GetHashCode">
+            <inheritdoc />
+        </member>
         <member name="T:Serilog.Events.LevelAlias">
             <summary>
             Descriptive aliases for <see cref="T:Serilog.Events.LogEventLevel"/>.
@@ -1783,6 +1882,16 @@
             </summary>
         </member>
         <member name="M:Serilog.Events.LogEvent.#ctor(System.DateTimeOffset,Serilog.Events.LogEventLevel,System.Exception,Serilog.Events.MessageTemplate,System.Collections.Generic.IEnumerable{Serilog.Events.LogEventProperty})">
+            <summary>
+            Construct a new <seealso cref="T:Serilog.Events.LogEvent"/>.
+            </summary>
+            <param name="timestamp">The time at which the event occurred.</param>
+            <param name="level">The level of the event.</param>
+            <param name="exception">An exception associated with the event, or null.</param>
+            <param name="messageTemplate">The message template describing the event.</param>
+            <param name="properties">Properties associated with the event, including those presented in <paramref name="messageTemplate"/>.</param>
+        </member>
+        <member name="M:Serilog.Events.LogEvent.#ctor(System.DateTimeOffset,Serilog.Events.LogEventLevel,System.Exception,Serilog.Events.MessageTemplate,Serilog.Events.EventProperty[])">
             <summary>
             Construct a new <seealso cref="T:Serilog.Events.LogEvent"/>.
             </summary>
@@ -1839,7 +1948,21 @@
             <param name="property">The property to add or update.</param>
             <exception cref="T:System.ArgumentNullException"></exception>
         </member>
+        <member name="M:Serilog.Events.LogEvent.AddOrUpdateProperty(Serilog.Events.EventProperty@)">
+            <summary>
+            Add a property to the event if not already present, otherwise, update its value.
+            </summary>
+            <param name="property">The property to add or update.</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
         <member name="M:Serilog.Events.LogEvent.AddPropertyIfAbsent(Serilog.Events.LogEventProperty)">
+            <summary>
+            Add a property to the event if not already present.
+            </summary>
+            <param name="property">The property to add.</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Serilog.Events.LogEvent.AddPropertyIfAbsent(Serilog.Events.EventProperty@)">
             <summary>
             Add a property to the event if not already present.
             </summary>
@@ -1904,6 +2027,14 @@
             </summary>
             <param name="name">The name of the property.</param>
             <param name="value">The value of the property.</param>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Serilog.Events.LogEventProperty.#ctor(Serilog.Events.EventProperty)">
+            <summary>
+            Construct a <see cref="T:Serilog.Events.LogEventProperty"/> from an existing <see cref="T:Serilog.Events.EventProperty"/> instance.
+            </summary>
+            <param name="property">The existing property.</param>
             <exception cref="T:System.ArgumentException"></exception>
             <exception cref="T:System.ArgumentNullException"></exception>
         </member>
@@ -4218,7 +4349,7 @@
             Not all sinks are compatible with transactional auditing requirements (many will use asynchronous
             batching to improve write throughput and latency). Sinks need to opt-in to auditing support by
             extending <see cref="T:Serilog.Configuration.LoggerAuditSinkConfiguration"/>, though the generic <see cref="M:Serilog.Configuration.LoggerAuditSinkConfiguration.Sink(Serilog.Core.ILogEventSink,Serilog.Events.LogEventLevel,Serilog.Core.LoggingLevelSwitch)"/>
-            method allows any sink class to be adapted for auditing. 
+            method allows any sink class to be adapted for auditing.
             </remarks>
         </member>
         <member name="P:Serilog.LoggerConfiguration.MinimumLevel">
@@ -4550,6 +4681,17 @@
             <summary>
             Writes the provided value to the output, applying direction-based padding when <paramref name="alignment"/> is provided.
             </summary>
+        </member>
+        <member name="T:Serilog.Settings.KeyValuePairs.SurrogateConfigurationMethods">
+             <summary>
+             Contains "fake extension" methods for the Serilog configuration API.
+             By default the settings knows how to find extension methods, but some configuration
+             are actually "regular" method calls and would not be found otherwise.
+            
+             This static class contains internal methods that can be used instead.
+            
+             See also <seealso cref="T:Serilog.Settings.KeyValuePairs.CallableConfigurationMethodFinder"/>
+             </summary>
         </member>
     </members>
 </doc>

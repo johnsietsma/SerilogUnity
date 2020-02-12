@@ -1,6 +1,6 @@
 # Change log
 
-## [0.0.1-preview] - 2019-09-10
+## [0.0.2-preview] - 2020-02-12
 
 ### New Features
 

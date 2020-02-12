@@ -1,5 +1,5 @@
 {
-    "name": "com.johnsietsma.serilog.editor",
+    "name": "com.serilog.editor",
     "references": [
         "GUID:09ef32ec8d2e77e43b3551c56c0f1fad"
     ],
@@ -12,5 +12,6 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": []
+    "versionDefines": [],
+    "noEngineReferences": false
 }

@@ -7,12 +7,23 @@ using UnityEngine;
 
 public static class SerilogUnityConsoleExtensions
 {
+    /// <summary>
+    /// Add a sink that writes to the Unity console.
+    /// <code>
+    /// Log.Logger = new LoggerConfiguration()
+    /// .WriteTo.UnityConsole()
+    /// .CreateLogger();
+    /// </code>
+    /// </summary>
     public static LoggerConfiguration UnityConsole(this LoggerSinkConfiguration sinkConfiguration)
     {
         return sinkConfiguration.Sink(new SerliogUnityConsoleEventSink());
     }
 }
 
+/// <summary>
+/// Serilog event sink that writes to the Unity console.
+/// </summary>
 public class SerliogUnityConsoleEventSink : ILogEventSink
 {
     [System.Diagnostics.DebuggerHidden]
